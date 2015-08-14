@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use GuzzleHttp\Message\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/home", name="firstPage")
      */
     public function indexAction(Request $request)
     {
@@ -17,5 +18,21 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
+    }
+
+    /**
+     * @Route("/home/logout", name="logout")
+     */
+    public function logoutAction(){
+
+    }
+
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function landingPageAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return new \Symfony\Component\HttpFoundation\Response("access /home with token to authenticate");
     }
 }

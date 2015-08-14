@@ -23,29 +23,25 @@ class WebserviceUserProvider implements UserProviderInterface
 
     public function __construct($accountHost)
     {
-        //$this->session = $session;
         $this->accountHost = $accountHost;
-        //$this->entityManager = $doctrine->getManager();
-
     }
 
     public function loadUserByUsername($profileToken)
     {
+        //mail("ronil.merchant@practo.com","test","authenticate");
         $client = new Client(
             array('base_url' => $this->accountHost,
                 'defaults' => array('headers' => array('X-Profile-Token' => $profileToken)))
         );
 
         $res = $client->get('/get_profile_with_token', ['exceptions' => false]);
-
-
         if($res->getStatusCode()===200){
             $userJson = $res->json();
-            $userId = $userJson["id"];
+            //$userId = $userJson["id"];
         }
-
+        //echo "<pre>";print_r($userJson);
         if ($userJson) {
-            $username = $userJson["id"];
+            $username = $userJson["name"];
             $password = $profileToken;
             $roles = array();
 
@@ -66,7 +62,7 @@ class WebserviceUserProvider implements UserProviderInterface
             );
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        return $user;
     }
 
     public function supportsClass($class)

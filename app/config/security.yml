@@ -11,11 +11,14 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         secured_area:
-            pattern: ^/
-            stateless: true
+            pattern: ^/home
+            stateless: false
             simple_preauth:
                 authenticator: apikey_authenticator
             provider: api_key_user_provider
+            logout:
+                path: /home/logout
+                target: /
 
         main:
             anonymous: ~
